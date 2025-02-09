@@ -3,13 +3,20 @@ import { useEffect, useRef, useState } from "react";
 import styles from "./TtsInput.module.css";
 import { tts_base64 } from "@/app/tts";
 
-export default function TtsInput({ id, onDelete, speechRate, pitch }) {
+export default function TtsInput({
+  id,
+  onDelete,
+  speechRate,
+  pitch,
+  defaultVoice,
+  setDefaultVoice,
+}) {
   const [text, setText] = useState("");
   const [isTextChanged, setIsTextChanged] = useState(false);
   const [base64Audio, setBase64Audio] = useState("");
   const [isTTSLoading, setIsTTSLoading] = useState(false);
   const [isConfirmRemoveVisible, setIsConfirmRemoveVisible] = useState(false);
-  const [voice, setVoice] = useState("ml-IN-SobhanaNeural");
+  const [voice, setVoice] = useState(defaultVoice);
 
   const removeConfirmContainerRef = useRef(null);
 
@@ -30,21 +37,12 @@ export default function TtsInput({ id, onDelete, speechRate, pitch }) {
     }
   };
 
-  const handleVoiceChange = (option) => {
-    let optionVoiceMap = {
-      mal: "ml-IN-SobhanaNeural",
-      eng1: "en-US-JennyNeural",
-      eng2: "en-GB-RyanNeural",
-      eng3: "en-AU-NatashaNeural",
-      eng4: "en-US-SteffanNeural",
-      ger1: "de-DE-ConradNeural",
-      ger2: "de-DE-AmalaNeural",
-    };
-    setVoice(optionVoiceMap[option]);
+  const handleVoiceChange = (newVoice) => {
+    setDefaultVoice(newVoice);
+    setVoice(newVoice);
   };
 
   useEffect(() => {
-    console.log("voice changed!");
     doTTS(true);
   }, [voice]);
 
@@ -61,23 +59,30 @@ export default function TtsInput({ id, onDelete, speechRate, pitch }) {
         }}
         onBlur={doTTS}
       ></textarea>
-      {isTTSLoading ? (
-        <p>Loading...</p>
-      ) : (
-        <audio
-          controls="controls"
-          src={`data:audio/mp3;base64,${base64Audio}`}
-        />
-      )}
+      <div className={styles.audioContainer}>
+        {isTTSLoading ? (
+          <p>Loading...</p>
+        ) : (
+          <audio
+            controls="controls"
+            src={`data:audio/mp3;base64,${base64Audio}`}
+          />
+        )}
+      </div>
       <div className={styles.footer}>
-        <select onChange={(e) => handleVoiceChange(e.target.value)}>
-          <option value="mal">Malayalam</option>
-          <option value="eng1">English 1</option>
-          <option value="eng2">English 2</option>
-          <option value="eng3">English 3</option>
-          <option value="eng4">English 4</option>
-          <option value="ger1">German 1</option>
-          <option value="ger2">German 2</option>
+        <select
+          onChange={(e) => {
+            handleVoiceChange(e.target.value);
+          }}
+          value={voice}
+        >
+          <option value="en-US-JennyNeural">English 1</option>
+          <option value="en-GB-RyanNeural">English 2</option>
+          <option value="en-AU-NatashaNeural">English 3</option>
+          <option value="en-US-SteffanNeural">English 4</option>
+          <option value="ml-IN-SobhanaNeural">Malayalam</option>
+          <option value="de-DE-ConradNeural">German 1</option>
+          <option value="de-DE-AmalaNeural">German 2</option>
         </select>
         <div
           className={styles.removeConfirmContainer}

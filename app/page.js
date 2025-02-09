@@ -6,20 +6,26 @@ import styles from "./page.module.css";
 export default function Home() {
   const [inputs, setInputs] = useState([1]);
   const addInput = () => {
-    setInputs([...inputs, inputs.length + 1]);
+    let newKey = inputs.length > 0 ? inputs[inputs.length - 1] + 1 : 1;
+    setInputs([...inputs, newKey]);
   };
   const removeInput = (deleteInput) => {
     setInputs(inputs.filter((input) => input !== deleteInput));
   };
 
-  const [speechRate, setSpeechRate] = useState(0);
+  const [speechRate, setSpeechRate] = useState(20);
   const [pitch, setPitch] = useState(0);
+  const [defaultVoice, setDefaultVoice] = useState("en-US-JennyNeural");
 
   return (
     <>
       <div className={styles.controlsContainer}>
         <div>
-          <p>Speech rate (range: -100% to 100%)</p>
+          <p>
+            Speech rate
+            <br />
+            <span>-100% to 100%</span>
+          </p>
           <input
             type="range"
             name="rate"
@@ -31,7 +37,11 @@ export default function Home() {
           <p>{speechRate}%</p>
         </div>
         <div>
-          <p>Voice pitch (range: -100Hz to 100Hz)</p>
+          <p>
+            Voice pitch
+            <br />
+            <span>-100Hz to 100Hz</span>
+          </p>
           <input
             type="range"
             name="rate"
@@ -53,6 +63,7 @@ export default function Home() {
       >
         Reset
       </button>
+      <hr className={styles.hr} />
 
       {inputs.map((input) => (
         <TtsInput
@@ -61,6 +72,8 @@ export default function Home() {
           onDelete={removeInput}
           speechRate={speechRate}
           pitch={pitch}
+          defaultVoice={defaultVoice}
+          setDefaultVoice={setDefaultVoice}
         />
       ))}
       <button onClick={addInput}>Add</button>
