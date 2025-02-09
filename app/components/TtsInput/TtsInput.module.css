@@ -12,6 +12,10 @@
 .ttsInputContainer > audio {
   width: 100%;
 }
+.footer {
+  display: flex;
+  justify-content: space-between;
+}
 .removeConfirmContainer {
   display: flex;
   justify-content: end;
