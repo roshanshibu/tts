@@ -1,0 +1,15 @@
+.ttsInputContainer {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid rgb(199, 199, 199);
+  padding: 20px;
+  gap: 10px;
+}
+.textInput {
+  resize: vertical;
+}
+
+.removeConfirmContainer {
+  display: flex;
+  justify-content: end;
+}
