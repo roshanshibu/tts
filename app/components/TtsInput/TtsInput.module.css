@@ -9,7 +9,9 @@
 .textInput {
   resize: vertical;
 }
-
+.ttsInputContainer > audio {
+  width: 100%;
+}
 .removeConfirmContainer {
   display: flex;
   justify-content: end;
