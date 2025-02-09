@@ -6,7 +6,8 @@
   display: flex;
   flex-direction: column;
 }
-.controlsContainer > button {
-  height: fit-content;
+.resetControlsButton {
+  margin-bottom: 50px;
+  width: fit-content;
   align-self: center;
 }

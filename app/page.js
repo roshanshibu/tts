@@ -42,15 +42,17 @@ export default function Home() {
           />
           <p>{pitch}Hz</p>
         </div>
-        <button
-          onClick={() => {
-            setSpeechRate(0);
-            setPitch(0);
-          }}
-        >
-          Reset
-        </button>
       </div>
+
+      <button
+        onClick={() => {
+          setSpeechRate(0);
+          setPitch(0);
+        }}
+        className={styles.resetControlsButton}
+      >
+        Reset
+      </button>
 
       {inputs.map((input) => (
         <TtsInput

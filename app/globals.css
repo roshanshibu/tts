@@ -3,7 +3,7 @@ body {
   margin-top: 40px;
   display: flex;
   flex-direction: column;
-  gap: 50px;
+  gap: 5px;
 }
 :root {
   color-scheme: dark;
